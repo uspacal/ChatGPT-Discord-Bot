@@ -13,9 +13,7 @@
 
 ## config file:
 name: config.yaml
-
 dest: same as bot.py & bot_addin.py
-
 content:
 
 ```
