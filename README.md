@@ -12,9 +12,12 @@
 - datetime
 
 ## config file:
-name: config.yaml\n
-dest: same as bot.py & bot_addin.py\n
-content:\n
+name: config.yaml
+
+dest: same as bot.py & bot_addin.py
+
+content:
+
 ```
 ---
 keys:
