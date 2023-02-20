@@ -10,7 +10,6 @@ with open('config.yaml') as f:
 openai.api_key = data["keys"]["openai"]
 bot_tokens = [
     data["keys"]["discord"]["main"],
-    data["keys"]["discord"]["fluxx"]
 ]
 
 
@@ -27,6 +26,9 @@ async def run_client(token):
     async def on_message(message):
         if message.author == client.user:
             await bot_addin.own_message(message)
+
+        elif not message.guild:
+            await bot_addin.no_guild(message)
 
         elif message.content.startswith('&ai'):
             await bot_addin.command_ai(message)
@@ -60,8 +62,3 @@ async def main():
     await asyncio.gather(*tasks)
 
 asyncio.run(main())
-
-
-
-
-
