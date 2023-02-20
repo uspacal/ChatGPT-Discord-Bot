@@ -12,7 +12,7 @@ def log(message, response):
 
 
 # open ai api request #
-def open_api_request(text, model="text-davinci-003", temperature=0, max_tokens=4000):
+def open_api_request(text, model="text-davinci-003", temperature=0, max_tokens=4096):
     tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
     in_token = tokenizer(text)['input_ids']
     in_token_len = len(in_token)
@@ -61,6 +61,12 @@ async def own_message(message):
     return
 
 
+async def no_guild(message):
+    text = """Don't slide in my dms!"""
+    log(message, "DM")
+    await dc_reply(message, text)
+
+
 async def command_not_found(message):
     text = """I'm sorry, I don't know this command...
 Use `&help` to see the full list :)"""
@@ -75,8 +81,9 @@ async def command_ai(message):
         this_message = await dc_reply(message, "Let me think..")
         try:
             response = open_api_request(text=message.content[4:])
-            reply = response['choices'][0]['text']
-        except:
+            reply = response['choices'][0]['text'].replace("\n\n", "\n").strip()
+        except Exception as err:
+            print(err)
             response = None
             reply = "openapi error, failed to get response"
         log(message, response)
